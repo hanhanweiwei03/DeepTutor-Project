@@ -1,0 +1,14 @@
+capabilities:
+  question:
+    temperature: 0.5
+    max_tokens: 4096
+  solve:
+    temperature: 0.3
+    max_tokens: 8192
+  chat:
+    temperature: 0.7
+    max_tokens: 4096
+tools:
+  brainstorm:
+    temperature: 0.7
+    max_tokens: 4096
