@@ -1,0 +1,13 @@
+paths:
+  user_log_dir: "data/user/logs"
+
+logging:
+  log_dir: "data/user/logs"
+
+capabilities:
+  question:
+    generation:
+      tools:
+        web_search: false
+        rag: true
+        code_execution: false
