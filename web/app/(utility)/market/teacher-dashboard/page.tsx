@@ -49,7 +49,7 @@ export default function TeacherDashboardPage() {
     </div>
   );
 
-  const maxTopicCount = Math.max(1, ...data.topic_heatmap.map((t) => t.count));
+  const maxTopicCount = Math.max(1, ...(data.topic_heatmap || []).map((t) => t.count));
 
   return (
     <div className="flex h-full flex-col overflow-y-auto p-8">
@@ -93,7 +93,7 @@ export default function TeacherDashboardPage() {
           {/* Topic Weakness Heatmap */}
           <div className="rounded-xl border border-[var(--border)] bg-[var(--secondary)] p-5">
             <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Topic Weakness Heatmap</p>
-            {data.topic_heatmap.length === 0 ? (
+            {!data.topic_heatmap || data.topic_heatmap.length === 0 ? (
               <p className="text-xs text-[var(--muted-foreground)]">No data yet. Use Diagnostic Quiz and Mistake Notebook to populate.</p>
             ) : (
               <div className="space-y-2">
@@ -114,11 +114,11 @@ export default function TeacherDashboardPage() {
           </div>
 
           {/* Progress Timeline */}
-          {data.progress.length > 0 && (
+          {data.progress && data.progress.length > 0 && (
             <div className="rounded-xl border border-[var(--border)] bg-[var(--secondary)] p-5">
               <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Diagnostic Progress</p>
               <div className="space-y-2">
-                {data.progress.map((p, i) => (
+                {(data.progress || []).map((p, i) => (
                   <div key={i} className="flex items-center gap-3 text-xs">
                     <span className="w-20 text-[var(--muted-foreground)]">{p.date}</span>
                     <span className="w-16 text-[var(--foreground)] font-medium">{p.subject}</span>
@@ -142,7 +142,7 @@ export default function TeacherDashboardPage() {
           <div className="rounded-xl border border-[var(--border)] bg-[var(--secondary)] p-5">
             <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Recommended Actions</p>
             <div className="space-y-2">
-              {data.recommended_actions.map((a, i) => (
+              {(data.recommended_actions || []).map((a, i) => (
                 <Link key={i} href={a.link}
                   className={`block rounded-lg border p-3 transition-colors hover:bg-[var(--background)] ${PRIORITY_COLORS[a.priority] || ""}`}>
                   <div className="flex items-center justify-between">
@@ -157,7 +157,7 @@ export default function TeacherDashboardPage() {
           </div>
 
           {/* Error Type Distribution */}
-          {Object.keys(data.error_type_distribution).length > 0 && (
+          {data.error_type_distribution && Object.keys(data.error_type_distribution).length > 0 && (
             <div className="rounded-xl border border-[var(--border)] bg-[var(--secondary)] p-5">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Error Types</p>
               <div className="space-y-2">
